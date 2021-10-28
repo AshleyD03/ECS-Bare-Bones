@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
 
@@ -19,7 +18,7 @@ public class Interpreter {
     String path = input("What file do you want to run?");
 
     // Read file as list of strings
-    List<String> lines = null;
+    ArrayList<String> lines = null;
     try {
       lines = loadFile(path);
     } catch (IOException e) {
@@ -38,8 +37,6 @@ public class Interpreter {
       // Interp line
       String line = lines.get(lineNum);
       String[] fields = interpLine(line);
-
-      System.out.println(Arrays.toString(fields));
 
       // Perform lines command from first field
       switch (fields[0]) {
@@ -81,7 +78,6 @@ public class Interpreter {
       }
       ;
       lineNum++;
-      stack.print();
     }
     ;
   };
@@ -105,9 +101,9 @@ public class Interpreter {
    * @return List<String>.
    * @throws IOException
    */
-  public static List<String> loadFile(String path) throws IOException {
+  public static ArrayList<String> loadFile(String path) throws IOException {
     String text = Files.readString(Path.of(path));
-    List<String> list = Arrays.asList(text.split(";", 0));
+    ArrayList<String> list = new ArrayList<String>(Arrays.asList(text.split(";", 0)));
     return list;
   }
 
@@ -119,11 +115,9 @@ public class Interpreter {
    */
   public static String input(String msg) {
     System.out.println(msg);
-
     Scanner scan = new Scanner(System.in);
     String input = scan.nextLine();
     scan.close();
-
     return input;
   }
 }
