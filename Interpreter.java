@@ -1,4 +1,8 @@
 import java.util.Scanner;
+
+import Storage.LoopCondition;
+import Storage.Stack;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -55,8 +59,8 @@ public class Interpreter {
         break;
 
       case "while":
-        LoopCondition newLoop = new LoopCondition(fields[1], fields[3], fields[2], lineNum);
-        if (newLoop.isTrue(stack)) {
+        LoopCondition newLoop = new LoopCondition(fields[1], fields[3], fields[2], lineNum, stack);
+        if (newLoop.isTrue()) {
           loops.add(newLoop);
           stack.addScope();
         }
@@ -64,7 +68,7 @@ public class Interpreter {
 
       case "end":
         LoopCondition curLoop = loops.get(loops.size() - 1);
-        if (curLoop.isTrue(stack)) {
+        if (curLoop.isTrue()) {
           lineNum = curLoop.lineNum;
         } else {
           loops.remove(loops.size() - 1);

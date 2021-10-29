@@ -1,3 +1,5 @@
+package Storage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,12 +22,25 @@ public class Stack {
    * @return
    */
   public Integer read(String key) {
-    for (int i = 0; i < store.size(); i++) {
-      int pos = store.size() - 1 - i;
-      Integer val = store.get(pos).get(key);
-      if (val != null)
-        return val;
+    Integer result;
+    try {
+
+      // Check if key is integer
+      result = Integer.parseInt(key);
+      return result;
+
+    } catch (Exception e) {
+
+      // Then search
+      for (int i = 0; i < store.size(); i++) {
+        int pos = store.size() - 1 - i;
+        result = store.get(pos).get(key);
+        if (result != null)
+          return result;
+      }
     }
+    System.err.println("Loop condition " + key + " missing");
+    System.exit(1);
     return null;
   }
 
@@ -72,7 +87,6 @@ public class Stack {
   public void removeScope() {
     store.remove(store.size() - 1);
   }
-
   /**
    * Print out contents of all scopes from the stack, in order of oldest to
    * newest.
