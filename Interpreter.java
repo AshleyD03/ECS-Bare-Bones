@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import Commands.ClearCmd;
 import Storage.LoopCondition;
 import Storage.Stack;
 
@@ -45,7 +46,8 @@ public class Interpreter {
       // Perform lines command from first field
       switch (fields[0]) {
       case "clear":
-        stack.init(fields[1], 0);
+        ClearCmd clr = new ClearCmd(stack);
+        clr.run(fields);
         break;
 
       case "incr":

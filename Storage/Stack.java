@@ -71,6 +71,7 @@ public class Stack {
    */
   public void init(String key, Integer value) {
     store.get(store.size() - 1).put(key, value);
+    System.out.println(key + value);
   }
 
   /**
